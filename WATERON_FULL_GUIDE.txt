@@ -1,0 +1,237 @@
+============================================================
+  WATERON (WTRN) — ПОЛНОЕ РУКОВОДСТВО
+  От создания токена до листинга на CoinGecko
+  Дата: 12 февраля 2026
+============================================================
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ЧАСТЬ 1: СОЗДАНИЕ ТОКЕНА В REMIX IDE
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 1: Открыть Remix IDE
+- Перейти на https://remix.ethereum.org/
+- Это бесплатная онлайн-IDE для разработки смарт-контрактов Solidity
+
+ШАГ 2: Создать файл контракта
+- В Remix: File Explorer → contracts → создать файл Wateron.sol
+- Вставить код:
+
+────────────────────────────────────────
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract Wateron is ERC20 {
+    constructor() ERC20("Wateron", "WTRN") {
+        // 1 миллиард токенов, 18 decimals
+        _mint(msg.sender, 1_000_000_000 * 10 ** decimals());
+    }
+}
+────────────────────────────────────────
+
+ШАГ 3: Скомпилировать контракт
+- Перейти во вкладку "Solidity Compiler" (левая панель, иконка с буквой S)
+- Выбрать компилятор версии 0.8.20+
+- Нажать "Compile Wateron.sol"
+- Убедиться что нет ошибок (зелёная галочка)
+
+ШАГ 4: Подключить MetaMask
+- Убедиться что в MetaMask добавлена сеть BNB Smart Chain:
+  - Network Name: BNB Smart Chain
+  - RPC URL: https://bsc-dataseed.binance.org/
+  - Chain ID: 56
+  - Symbol: BNB
+  - Explorer: https://bscscan.com/
+- Иметь немного BNB на балансе для оплаты gas
+
+ШАГ 5: Задеплоить контракт
+- Перейти во вкладку "Deploy & Run Transactions"
+- Environment: выбрать "Injected Provider - MetaMask"
+- MetaMask попросит подтвердить подключение — подтвердить
+- Contract: выбрать "Wateron"
+- Нажать "Deploy"
+- MetaMask попросит подтвердить транзакцию — подтвердить
+- Дождаться подтверждения транзакции в сети
+
+ШАГ 6: Получить адрес контракта
+- После деплоя контракт появится в разделе "Deployed Contracts"
+- Скопировать адрес контракта
+
+РЕЗУЛЬТАТ ДЕПЛОЯ:
+- Адрес контракта: 0x8e21428bc688aBF4e0c08f37863611eD1f3E91C1
+- Сеть: BNB Smart Chain (BSC)
+- Стандарт: BEP-20
+- Все 1,000,000,000 WTRN зачислены на кошелёк деплоера
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ЧАСТЬ 2: ВЕРИФИКАЦИЯ КОНТРАКТА НА BSCSCAN
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 1: Перейти на BscScan
+- https://bscscan.com/address/0x8e21428bc688aBF4e0c08f37863611eD1f3E91C1
+
+ШАГ 2: Верифицировать контракт
+- Вкладка "Contract" → "Verify and Publish"
+- Compiler Type: Solidity (Single file)
+- Compiler Version: v0.8.20
+- License Type: MIT
+- Вставить код контракта (flattened — с OpenZeppelin кодом inline)
+- Нажать "Verify and Publish"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ЧАСТЬ 3: СОЗДАНИЕ САЙТА ПРОЕКТА
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- Создан сайт: https://wateron.vercel.app/
+- Файлы: index.html + logo-32.png + logo-256.png + logo-512.png
+- Задеплоен на Vercel
+- Содержит: описание проекта, токеномика, ссылки на контракт
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ЧАСТЬ 4: ЗАЯВКА НА COINMARKETCAP (CMC) — PREVIEW LISTING
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Форма: https://support.coinmarketcap.com/hc/en-us/requests/new
+
+Заполненные поля:
+
+Subject: Add new token — Wateron (WTRN)
+
+Relationship with project: I am the founder of this project
+
+Project launch date: 2026-02-12
+
+Project name: Wateron
+
+Project ticker/symbol: WTRN
+
+One-liner description:
+Wateron (WTRN) is a BEP-20 token where 1 WTRN = 1 Liter of Water — tokenizing the world's most valuable resource on BNB Chain.
+
+Detailed project description:
+Wateron (WTRN) is a utility token built on BNB Smart Chain (BEP-20) that represents the tokenization of water resources. The core concept is simple yet powerful: 1 WTRN = 1 Liter of Water.
+
+Water is the most essential resource on Earth, yet it lacks proper representation in the digital economy. Wateron bridges this gap by creating a digital asset that tracks and represents water value on the blockchain.
+
+Key features:
+• Fixed supply of 1,000,000,000 WTRN (no mint, no burn)
+• Fully transparent and auditable smart contract
+• BEP-20 standard for maximum compatibility
+• No admin functions — fully decentralized after deployment
+• Fair token distribution: 40% Community, 40% Liquidity, 20% Founder
+
+The token serves as a foundational layer for future water-related DeFi applications, including water credit trading, conservation incentives, and water resource management on-chain.
+
+Platform: BNB Smart Chain (BEP-20)
+
+Contract address: 0x8e21428bc688aBF4e0c08f37863611eD1f3E91C1
+
+BscScan link: https://bscscan.com/token/0x8e21428bc688aBF4e0c08f37863611eD1f3E91C1
+
+Decimals: 18
+
+Total supply: 1,000,000,000
+
+Max supply: 1,000,000,000
+
+Is the project audited: No
+
+Website: https://wateron.vercel.app/
+
+Logo: logo-256.png (256x256, PNG, transparent background)
+
+Category/Tags: Real World Assets (RWA), Tokenized Commodities
+
+Token allocation:
+- Founder: 20% (200,000,000 WTRN)
+- Liquidity: 40% (400,000,000 WTRN)
+- Community: 40% (400,000,000 WTRN)
+
+Number of holders at submission: 7
+
+Email: djumabaevb@gmail.com
+
+Статус заявки: PENDING
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ЧАСТЬ 5: ЗАЯВКА НА COINGECKO
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Форма: https://www.coingecko.com/en/coins/new
+
+Заполненные поля:
+
+Contact name: Bakyt Dzhumabaev
+Contact email: djumabaevb@gmail.com
+Relationship: Founder
+
+Coin/Token name: Wateron
+Coin/Token ticker: WTRN
+Is this a token: Yes (BEP-20 on BNB Chain)
+
+One-liner: 1 WTRN = 1 Liter of Water — tokenizing the world's most valuable resource.
+
+Detailed description:
+Wateron (WTRN) is a utility token built on BNB Smart Chain (BEP-20) that represents the tokenization of water resources. The core concept is simple yet powerful: 1 WTRN = 1 Liter of Water.
+
+Water is the most essential resource on Earth, yet it lacks proper representation in the digital economy. Wateron bridges this gap by creating a digital asset that tracks and represents water value on the blockchain.
+
+Key features:
+• Fixed supply of 1,000,000,000 WTRN (no mint, no burn)
+• Fully transparent and auditable smart contract
+• BEP-20 standard for maximum compatibility
+• No admin functions — fully decentralized after deployment
+• Fair token distribution: 40% Community, 40% Liquidity, 20% Founder
+
+Chain: BNB Smart Chain (BSC)
+Contract address: 0x8e21428bc688aBF4e0c08f37863611eD1f3E91C1
+Decimals: 18
+Block explorer: https://bscscan.com/token/0x8e21428bc688aBF4e0c08f37863611eD1f3E91C1
+
+Website: https://wateron.vercel.app/
+Launch date: 2026-02-12
+
+Total supply: 1,000,000,000
+Max supply: 1,000,000,000
+
+Logo: 256x256 PNG
+
+Category: Real World Assets (RWA)
+
+Статус заявки: PENDING
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+КЛЮЧЕВАЯ ИНФОРМАЦИЯ (СВОДКА)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Токен: Wateron (WTRN)
+Концепция: 1 WTRN = 1 Литр воды
+Сеть: BNB Smart Chain (BSC)
+Стандарт: BEP-20
+Контракт: 0x8e21428bc688aBF4e0c08f37863611eD1f3E91C1
+Supply: 1,000,000,000 (fixed, no mint/burn)
+Decimals: 18
+Сайт: https://wateron.vercel.app/
+BscScan: https://bscscan.com/token/0x8e21428bc688aBF4e0c08f37863611eD1f3E91C1
+Кошелёк создателя: 0xD1F2632Ff57746b938825875b36457409bd6381f
+Дата деплоя: 12 февраля 2026
+Аллокация: Founder 20%, Liquidity 40%, Community 40%
+Категории: Real World Assets (RWA), Tokenized Commodities
+Холдеры на момент подачи: 7
+
+============================================================
+  Файл создан Friday 💫 | 13 февраля 2026
+============================================================
