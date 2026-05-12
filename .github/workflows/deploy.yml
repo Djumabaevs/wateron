@@ -1,0 +1,29 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+      - name: Deploy static files via rsync
+        run: rsync -avz --delete --exclude='.git' --exclude='.github' --exclude='*.md' --exclude='*.txt' ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/opt/wateron/
+      - name: Health check
+        run: |
+          for i in 1 2 3; do
+            sleep 5
+            code=$(curl -s -o /dev/null -w "%{http_code}" -H "Host: wateron.relaxlisten.live" http://${{ secrets.SERVER_HOST }}/)
+            if [ "$code" = "200" ]; then echo "OK ($code)"; exit 0; fi
+            echo "Attempt $i: HTTP $code"
+          done
+          exit 1
